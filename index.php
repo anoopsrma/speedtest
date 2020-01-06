@@ -3,7 +3,8 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
 <meta charset="UTF-8" />
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="https://www.nepalitelecom.com/wp-content/uploads/2019/03/Favicon-16.png">
+<!-- <link rel="shortcut icon" href="favicon.ico"> -->
 <script type="text/javascript" src="speedtest.js"></script>
 <script type="text/javascript">
 function I(i){return document.getElementById(i);}
@@ -101,10 +102,17 @@ function startStop(){
                         var shareURL=window.location.href.substring(0,window.location.href.lastIndexOf("/"))+"/results/?id="+testId;
                         I("resultsImg").src=shareURL;
                         I("resultsURL").value=shareURL;
-                        I("testId").innerHTML=testId;
                         I("shareArea").style.display="";
+                        document.getElementById('fb-share-button').setAttribute("data-href",shareURL);
+                        document.getElementById('twitter-share-button').setAttribute("href", "https://twitter.com/intent/tweet?url="+encodeURIComponent(shareURL));
+                        document.getElementById("twitter-share-button").outerHTML = document.getElementById("twitter-share-button").outerHTML.replace(/div/g,"a")
+                        twttr.widgets.load()
+                        FB.XFBML.parse();
+
                     }
-                }catch(e){}
+                }catch(e){
+                    console.log(e)
+                }
             }
 		};
 		s.start();
@@ -288,6 +296,9 @@ function initUI(){
         color: #2851A3;
         padding-top: 200px;
     }
+    iframe{
+        height: 30px;
+    }
 	@media all and (max-width:40em){
 		body{
 			font-size:0.8em;
@@ -297,9 +308,9 @@ function initUI(){
 <title>Net Check Pro</title>
 </head>
 <body>
-
-<h1>NetCheckPro By </h1><a class="vendor" target="_blank" href="https://www.nepalitelecom.com/"><img id="site-logo" src="https://www.nepalitelecom.com/wp-content/uploads/2019/03/Nepali-Telecom-logo.png" alt="NepaliTelecom" width="300px" height="50px"></a>
-<br>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
+<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
 <br>
 <div id="testWrapper">
 	<div id="startStopBtn" onclick="startStop()"></div><br/>
@@ -333,13 +344,24 @@ function initUI(){
 		<div id="ipArea">
 			<span id="ip"></span>
 		</div>
-		<div id="shareArea" style="display:none">
+        <h1>NetCheckPro By </h1>
+        <a class="vendor" target="_blank" href="https://www.nepalitelecom.com/">
+            <img id="site-logo" src="https://www.nepalitelecom.com/wp-content/uploads/2019/03/Nepali-Telecom-logo.png" alt="NepaliTelecom" width="300px" height="50px">
+        </a>
+		<div id="shareArea" style="display:none ;">
 			<h3>Share results :</h3>
-			<p>Test ID: <span id="testId"></span></p>
-            <br>
 			<input type="text" value="" id="resultsURL" readonly="readonly" onclick="this.select();this.focus();this.select();document.execCommand('copy');alert('Link copied')"/>
-            <br>
-			<img src="" id="resultsImg" />
+            <div  style="display: inline-block;" id="fb-share-button" class="fb-share-button" data-href="http://speedtest.test/results/?id=05f8dha" data-layout="button" data-size="large">
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fspeedtest.test%2Fresults%2F%3Fid%3D05f8dha&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore" id="fb-xfbml-parse-ignore">Share</a>
+            </div>
+            <div style="display: inline-block;">
+                <div target="_blank"  id="twitter-share-button" class="twitter-share-button"
+                href="https://twitter.com/intent/tweet?url="
+                data-size="large">
+                    Tweet
+                </div>
+            </div>
+            <img src="" id="resultsImg" />
 		</div>
 	</div>
 </div>
@@ -376,11 +398,13 @@ function initUI(){
     <h4>Data removal</h4>
     <p>
         If you want to have your information deleted, you need to provide either the ID of the test or your IP address. This is the only way to identify your data, without this information we won't be able to comply with your request.<br/><br/>
-        Contact this email address for all deletion requests: <a href="mailto:PUT@YOUR_EMAIL.HERE">TO BE FILLED BY DEVELOPER</a>.
+        Contact this email address for all deletion requests: <a href="mailto:navyanup1@gmail.com">TO BE FILLED BY DEVELOPER</a>.
     </p>
     <br/><br/>
-    <a class="privacy" href="#" onclick="I('privacyPolicy').style.display='none'">Close</a><br/>
+    <a class="privacy" href="#" onclick="I('privacyPolicy').style.display=''">Close</a><br/>
 </div>
-<script type="text/javascript">setTimeout(function(){initUI()},100);</script>
+<script type="text/javascript">
+setTimeout(function(){initUI()},100);
+</script>
 </body>
 </html>
